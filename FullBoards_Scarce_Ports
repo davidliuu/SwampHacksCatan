@@ -161,7 +161,7 @@ class Board {
                     double str = 0;
                     double num = scarcityTerrain(ttype);
                     str += (12-num)/10.66;
-                    str /= 2.0;
+                    str /= 1.2;
                     return str;
         }
         
@@ -802,8 +802,10 @@ class Board {
             
             double str = 1;
             
-            if (ttype.compare("Ore") == 0 || ttype.compare("Brick") == 0)
+            if (ttype.compare("Wheat") == 0)
                 str = 1.15;
+            else if (ttype.compare("Ore") == 0)
+                str = 1.1;
             else if (ttype.compare("Sheep") == 0)
                 str = 0.85;
             else if (ttype.compare("Desert") == 0)
