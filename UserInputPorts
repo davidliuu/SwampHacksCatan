@@ -135,7 +135,7 @@ class Board {
         void setPorts() {
             for(int i = 1; i < 10; i++) {
                 string pType;
-                cout << "What resource type is Port " << i << "?" << endl;
+                cout << "What resource type is Port " << i << "? (Uppercase first letter please!)" << endl;
                 cin >> pType;
                 
                 if(i == 1) {
