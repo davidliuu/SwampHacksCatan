@@ -161,14 +161,26 @@ class Board {
                     double str = 0;
                     double num = scarcityTerrain(ttype);
                     str += (12-num)/10.66;
-                    str /= 2;
+                    str /= 2.0;
                     return str;
+        }
+        
+        double portStrength(string ptype, int tileNum) {
+                if(ptype.compare("Three") == 0) {
+                    return 1.25;
+                }
+                if(ptype.compare(board[tileNum].type) == 0) {
+                    return 1.15 - scarcityStrength(ptype);
+                }
+                else {
+                    return 0.9 - scarcityStrength(ptype);
+                }
         }
         
         void setPortsUser() {
             for(int i = 1; i < 10; i++) {
                 string pType;
-                cout << "What resource type is Port " << i << "? (Uppercase first letter please!)" << endl;
+                cout << "What resource type is Port " << i << "?" << endl;
                 cin >> pType;
                 
                 if(i == 1) {
@@ -791,9 +803,9 @@ class Board {
             double str = 1;
             
             if (ttype.compare("Ore") == 0 || ttype.compare("Brick") == 0)
-                str = 1.25;
+                str = 1.15;
             else if (ttype.compare("Sheep") == 0)
-                str = 0.75;
+                str = 0.85;
             else if (ttype.compare("Desert") == 0)
                 str = 0;
                 
@@ -812,7 +824,7 @@ class Board {
             
             if (tile == 0) {
                 
-                str = combStr(0);
+                str = combStr(0) + portStrength(board[tile].portTypes.at(0), tile);
                 if (spot == 1)
                     str += combStr(1);
                 else if (spot == 2)
@@ -825,9 +837,9 @@ class Board {
             
             if (tile == 1) {
                 
-                str = combStr(1);
+                str = combStr(1) + portStrength(board[tile].portTypes.at(0), tile);
                 if (spot == 1)
-                    str += combStr(2);
+                    str += combStr(2) + portStrength(board[tile].portTypes.at(1), tile);
                 else if (spot == 2)
                     str += combStr(2) + combStr(5);
                 else if (spot == 3)
@@ -842,18 +854,18 @@ class Board {
                 
                 str = combStr(2);
                 if (spot == 2)
-                    str += combStr(6);
+                    str += combStr(6) + portStrength(board[tile].portTypes.at(0), tile);
                 else if (spot == 3)
                     str += combStr(5) + combStr(6);
                 else if (spot == 4)
                     str += combStr(1) + combStr(5);
                 else if (spot == 5)
-                    str += combStr(1);
+                    str += combStr(1) + portStrength(board[tile].portTypes.at(1), tile);
             }
             
             if (tile == 3) {
                 
-                str = combStr(3);
+                str = combStr(3) + portStrength(board[tile].portTypes.at(1), tile);
                 if (spot == 0)
                     str += combStr(0);
                 else if (spot == 1)
@@ -863,7 +875,7 @@ class Board {
                 else if (spot == 3)
                     str += combStr(7) + combStr(8);
                 else if (spot == 4)
-                    str += combStr(7);
+                    str += combStr(7) + portStrength(board[tile].portTypes.at(0), tile);
             }
             
             if (tile == 4) {
@@ -902,9 +914,9 @@ class Board {
             
             if (tile == 6) {
                 
-                str = combStr(6);
+                str = combStr(6) + portStrength(board[tile].portTypes.at(1), tile);
                 if (spot == 0)
-                    str += combStr(2);
+                    str += combStr(2) + portStrength(board[tile].portTypes.at(0), tile);
                 else if (spot == 2)
                     str += combStr(11);
                 else if (spot == 3)
@@ -919,13 +931,13 @@ class Board {
                 
                 str = combStr(7);
                 if (spot == 0)
-                    str += combStr(3);
+                    str += combStr(3) + portStrength(board[tile].portTypes.at(0), tile);
                 else if (spot == 1)
                     str += combStr(3) + combStr(8);
                 else if (spot == 2)
                     str += combStr(8) + combStr(12);
                 else if (spot == 3)
-                    str += combStr(12);
+                    str += combStr(12) + portStrength(board[tile].portTypes.at(1), tile);
             }
             
             if (tile == 8) {
@@ -981,7 +993,7 @@ class Board {
             
             if (tile == 11) {
                 
-                str = combStr(11);
+                str = combStr(11) + portStrength(board[tile].portTypes.at(0), tile);
                 if (spot == 0)
                     str += combStr(6);
                 else if (spot == 3)
@@ -994,7 +1006,7 @@ class Board {
             
             if (tile == 12) {
                 
-                str = combStr(12);
+                str = combStr(12) + portStrength(board[tile].portTypes.at(0), tile);
                 if (spot == 0)
                     str += combStr(7) + combStr(8);
                 else if (spot == 1)
@@ -1004,7 +1016,7 @@ class Board {
                 else if (spot == 3)
                     str += combStr(16);
                 else if (spot == 5)
-                    str += combStr(7);
+                    str += combStr(7) + portStrength(board[tile].portTypes.at(1), tile);
             }
             
             if (tile == 13) {
@@ -1043,13 +1055,13 @@ class Board {
             
             if (tile == 15) {
                 
-                str = combStr(15);
+                str = combStr(15) + portStrength(board[tile].portTypes.at(0), tile);
                 if (spot == 0)
                     str += combStr(10) + combStr(11);
                 else if (spot == 1)
                     str += combStr(11);
                 else if (spot == 3)
-                    str += combStr(18);
+                    str += combStr(18) + portStrength(board[tile].portTypes.at(1), tile);
                 else if (spot == 4)
                     str += combStr(14) + combStr(18);
                 else if (spot == 5)
@@ -1058,7 +1070,7 @@ class Board {
             
             if (tile == 16) {
                 
-                str = combStr(16);
+                str = combStr(16) + portStrength(board[tile].portTypes.at(0), tile);
                 if (spot == 0)
                     str += combStr(12) + combStr(13);
                 else if (spot == 1)
@@ -1071,13 +1083,13 @@ class Board {
             
             if (tile == 17) {
                 
-                str = combStr(17);
+                str = combStr(17) + portStrength(board[tile].portTypes.at(1), tile);
                 if (spot == 0)
                     str += combStr(13) + combStr(14);
                 else if (spot == 1)
                     str += combStr(14) + combStr(18);
                 else if (spot == 2)
-                    str += combStr(18);
+                    str += combStr(18) + portStrength(board[tile].portTypes.at(0), tile);
                 else if (spot == 4)
                     str += combStr(16);
                 else if (spot == 5)
@@ -1090,9 +1102,9 @@ class Board {
                 if (spot == 0)
                     str += combStr(14) + combStr(15);
                 else if (spot == 1)
-                    str += combStr(15);
+                    str += combStr(15) + portStrength(board[tile].portTypes.at(0), tile);
                 else if (spot == 4)
-                    str += combStr(17);
+                    str += combStr(17) + portStrength(board[tile].portTypes.at(1), tile);
                 else if (spot == 5)
                     str += combStr(14) + combStr(17);
             }
@@ -1153,6 +1165,7 @@ class Board {
             cout << endl;
             initializeStrength();
             displayInfo();
+            printPorts();
             cout << endl;
             findStrongest();
             cout << endl;
