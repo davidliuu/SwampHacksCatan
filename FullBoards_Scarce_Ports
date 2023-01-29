@@ -807,7 +807,7 @@ class Board {
             else if (ttype.compare("Ore") == 0)
                 str = 1.07;
             else if (ttype.compare("Sheep") == 0)
-                str = 0.89
+                str = 0.89;
             else if (ttype.compare("Desert") == 0)
                 str = 0;
                 
