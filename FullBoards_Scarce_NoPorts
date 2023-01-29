@@ -149,7 +149,7 @@ class Board {
                     double str = 0;
                     double num = scarcityTerrain(ttype);
                     str += (12-num)/10.66;
-                    str /= 3;
+                    str /= 2;
                     return str;
         }
         
