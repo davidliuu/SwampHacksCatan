@@ -1,4 +1,5 @@
-    double result = 0;
+  double scarcityTerrain(string ttype) {
+  double result = 0;
     for (int i = 0; i < 19; i++) {
         if (board[i].type == "Ore" && ttype == "Ore") {
             result += valueStrength(board[i].value);
