@@ -803,11 +803,11 @@ class Board {
             double str = 1;
             
             if (ttype.compare("Wheat") == 0)
-                str = 1.15;
+                str = 1.17;
             else if (ttype.compare("Ore") == 0)
-                str = 1.1;
+                str = 1.07;
             else if (ttype.compare("Sheep") == 0)
-                str = 0.85;
+                str = 0.89
             else if (ttype.compare("Desert") == 0)
                 str = 0;
                 
