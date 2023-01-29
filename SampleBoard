@@ -1,0 +1,154 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include<algorithm>
+
+using namespace std;
+
+class Tile {
+  
+  public:
+  
+    string type;
+    int value;
+    vector<int> settlements;
+    vector<int> roads;
+    bool robber;
+    
+    Tile(string material, int val) {
+        
+        type = material;
+        value = val;
+        robber = false;
+        
+        for (int i = 0; i < 6; i++) {
+            
+            settlements.push_back(0);
+            roads.push_back(0);
+            
+        }
+        
+    }
+    
+};
+
+class Board {
+    
+    public:
+    
+        vector<Tile> board;
+        
+        Board() {
+            
+            vector<string> tileTypes;
+            for (int i = 0; i < 4; i++) {
+                if (i != 0) {
+                    tileTypes.push_back("Brick");
+                    tileTypes.push_back("Ore");
+                }
+                tileTypes.push_back("Sheep");
+                tileTypes.push_back("Wheat");
+                tileTypes.push_back("Wood");
+                
+            }
+            
+            vector<int> values;
+            for (int i = 2; i < 13; i++) { 
+                if (i != 2 && i != 12)
+                    values.push_back(i);
+                values.push_back(i);
+            }
+            
+            random_shuffle(tileTypes.begin(), tileTypes.end());
+            random_shuffle(values.begin(), values.end());
+            
+            for (int i = 0; i < 19; i++) {
+                
+                Tile newTile(tileTypes[i], values[i]);
+                board.push_back(newTile);
+                
+            }
+            
+        }
+        
+        void displayInfo() {
+            
+            for (int i = 0; i < 19; i++) {
+                
+                cout << "Tile " << i << ": " << board[i].type << board[i].value << endl;
+                
+                int count = 0;
+                
+                for (int q = 0; q < 6; q++) {
+                    
+                    if (board[i].settlements[q] == 0)
+                        count++;
+                    
+                }
+                
+                cout << "Tile " << i << " has " << count << " spots available" << endl;
+                
+            }
+            
+        }
+        
+        void buildSettlement(int x) {
+            
+            vector<int> available;
+            
+            for (int q = 0; q < 6; q++) {
+                    
+                if (board[x].settlements[q] == 0)
+                    available.push_back(q);
+                    
+            }
+            
+            cout << "Where would you like to build your settlement?" << endl;
+            cout << "Avaialble spots are: ";
+            
+            for (int i = 0; i < available.size(); i++) {
+                
+                cout << available[i] << " ";
+                
+            }
+            
+            cout << endl;
+            
+            int location;
+            cin >> location;
+            
+            bool actuallyAvailable = false;
+            
+            for (int i = 0; i < available.size(); i++) {
+                if (location == available[i])
+                    actuallyAvailable = true;
+            }
+            
+            while (actuallyAvailable == false) {
+                
+                cout << "Invalid option, please choose again" << endl;
+                cin >> location;
+                for (int i = 0; i < available.size(); i++) {
+                    if (location == available[i])
+                        actuallyAvailable = true;
+                }
+            }
+            
+            board[x].settlements[location] = 1;
+        }
+        
+};
+
+int main()
+{
+    Board test;
+    //test.displayInfo();
+    int testLoc = 0;
+    test.displayInfo();
+    while (testLoc != -1) {
+        cout << "Choose a tile to build a settlement (Choose -1 to not build): ";
+        cin >> testLoc;
+        test.buildSettlement(testLoc);
+    }
+    return 0;
+}
