@@ -1,20 +1,19 @@
-double scarcityTerrain(string ttype) {
     double result = 0;
     for (int i = 0; i < 19; i++) {
         if (board[i].type == "Ore" && ttype == "Ore") {
-            result += board[i].value;
+            result += valueStrength(board[i].value);
         }
         if (board[i].type == "Brick" && ttype == "Brick") {
-            result += board[i].value;
+            result += valueStrength(board[i].value);
         }
         if (board[i].type == "Wheat" && ttype == "Wheat") {
-            result += board[i].value;
+            result += valueStrength(board[i].value);
         }
         if (board[i].type == "Wood" && ttype == "Wood") {
-            result += board[i].value;
+            result += valueStrength(board[i].value);
         }
         if (board[i].type == "Sheep" && ttype == "Sheep") {
-            result += board[i].value;
+            result += valueStrength(board[i].value);
         }
     }
     return result;
@@ -24,6 +23,7 @@ double scarcityStrength(string ttype) {
             
             double str = 0;
             double num = scarcityTerrain(ttype);
-            str -= (12-num)/10.66;
+            str += (12-num)/10.66;
+            str /= 3;
             return str;
 }
